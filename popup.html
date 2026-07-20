@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Code Security Scanner</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+        <div>
+          <h1 class="header-title">Security Scanner</h1>
+          <p class="header-subtitle">AI Code Analysis</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Repo Info (shown when on a GitHub page) -->
+    <div id="repo-info" class="repo-info hidden">
+      <div class="repo-card">
+        <div class="repo-name" id="repo-name">owner/repo</div>
+        <div class="repo-meta" id="repo-meta">
+          <span class="repo-badge" id="repo-lang">--</span>
+          <span class="repo-badge" id="repo-stars">--</span>
+          <span class="repo-badge" id="repo-size">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not on GitHub -->
+    <div id="no-repo" class="no-repo">
+      <svg class="no-repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 15h8M9 9h.01M15 9h.01"/>
+      </svg>
+      <p class="no-repo-text">Navigate to a GitHub repository to start scanning</p>
+      <a id="no-repo-link" href="https://github.com" target="_blank" class="no-repo-link">Open GitHub &rarr;</a>
+    </div>
+
+    <!-- Scan Button -->
+    <button id="scan-btn" class="scan-btn hidden" disabled>
+      <svg class="scan-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span id="scan-btn-text">Scan Repository</span>
+    </button>
+
+    <!-- Progress -->
+    <div id="progress-section" class="progress-section hidden">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="progress-info">
+        <span id="progress-label">Scanning files...</span>
+        <span id="progress-count">0 / 0</span>
+      </div>
+    </div>
+
+    <!-- Results Summary -->
+    <div id="results-summary" class="results-summary hidden">
+      <div class="score-section">
+        <div class="score-ring" id="score-ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="score-ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="score-ring-fill" id="score-ring-fill" cx="60" cy="60" r="50"/>
+          </svg>
+          <div class="score-value" id="score-value">--</div>
+        </div>
+        <div class="score-meta">
+          <div class="score-label">Security Score</div>
+          <div class="score-verdict" id="score-verdict">--</div>
+        </div>
+      </div>
+
+      <div class="severity-grid">
+        <div class="severity-card critical">
+          <div class="severity-count" id="count-critical">0</div>
+          <div class="severity-label">Critical</div>
+        </div>
+        <div class="severity-card high">
+          <div class="severity-count" id="count-high">0</div>
+          <div class="severity-label">High</div>
+        </div>
+        <div class="severity-card medium">
+          <div class="severity-count" id="count-medium">0</div>
+          <div class="severity-label">Medium</div>
+        </div>
+        <div class="severity-card low">
+          <div class="severity-count" id="count-low">0</div>
+          <div class="severity-label">Low</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-value" id="stat-files">0</span>
+          <span class="stat-label">Files Scanned</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-issues">0</span>
+          <span class="stat-label">Issues Found</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-elapsed">0s</span>
+          <span class="stat-label">Scan Time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Findings List -->
+    <div id="findings-section" class="findings-section hidden">
+      <div class="findings-header">
+        <h2 class="findings-title">Findings</h2>
+        <div class="findings-filters">
+          <button class="filter-btn active" data-severity="all">All</button>
+          <button class="filter-btn" data-severity="critical">Critical</button>
+          <button class="filter-btn" data-severity="high">High</button>
+          <button class="filter-btn" data-severity="medium">Med</button>
+          <button class="filter-btn" data-severity="low">Low</button>
+        </div>
+      </div>
+      <div id="findings-list" class="findings-list">
+        <!-- Findings inserted here by JS -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>AI Code Security Scanner v1.0</span>
+      <span class="footer-dot">&middot;</span>
+      <button id="clear-btn" class="clear-btn">Clear Results</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
