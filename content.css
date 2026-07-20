@@ -1,0 +1,338 @@
+/* ===== AI Code Security Scanner — Content Script Styles ===== */
+
+/* ── Scan Button ── */
+.ai-scanner-btn-container {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.ai-scanner-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: #c9d1d9;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.ai-scanner-btn:hover {
+  background: #30363d;
+  border-color: #484f58;
+  color: #e6edf3;
+}
+
+.ai-scanner-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.ai-scanner-btn-scanning {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* ── Results Panel ── */
+.ai-scanner-panel {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 400px;
+  max-height: calc(100vh - 100px);
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.2);
+  z-index: 99999;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #e6edf3;
+  display: none;
+  animation: ai-scanner-slide-in 0.2s ease;
+}
+
+@keyframes ai-scanner-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Panel Header ── */
+.ai-scanner-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #21262d;
+  background: #161b22;
+}
+
+.ai-scanner-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.ai-scanner-panel-title svg {
+  color: #58a6ff;
+  width: 16px;
+  height: 16px;
+}
+
+.ai-scanner-close {
+  background: none;
+  border: none;
+  color: #6e7681;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.ai-scanner-close:hover {
+  color: #e6edf3;
+}
+
+/* ── Progress ── */
+.ai-scanner-panel-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  color: #8b949e;
+  font-size: 12px;
+}
+
+.ai-scanner-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #21262d;
+  border-top-color: #58a6ff;
+  border-radius: 50%;
+  animation: ai-scanner-spin 0.6s linear infinite;
+}
+
+@keyframes ai-scanner-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Results Body ── */
+.ai-scanner-panel-body {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  padding: 0;
+}
+
+.ai-scanner-panel-body::-webkit-scrollbar {
+  width: 5px;
+}
+.ai-scanner-panel-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ai-scanner-panel-body::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+/* ── Score ── */
+.ai-scanner-score {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid #21262d;
+}
+
+.ai-scanner-score-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 4px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: #0d1117;
+}
+
+.ai-scanner-score-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ai-scanner-score-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ai-scanner-score-desc {
+  font-size: 11px;
+  color: #6e7681;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Severity Badges ── */
+.ai-scanner-severities {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #21262d;
+  flex-wrap: wrap;
+}
+
+.ai-sev {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.ai-sev-critical {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.12);
+}
+
+.ai-sev-high {
+  color: #d29922;
+  background: rgba(210, 153, 34, 0.12);
+}
+
+.ai-sev-medium {
+  color: #58a6ff;
+  background: rgba(56, 139, 253, 0.12);
+}
+
+.ai-sev-low {
+  color: #7ee787;
+  background: rgba(126, 231, 135, 0.12);
+}
+
+/* ── Clean ── */
+.ai-scanner-clean {
+  padding: 24px 16px;
+  text-align: center;
+  color: #3fb950;
+  font-weight: 500;
+}
+
+/* ── Error ── */
+.ai-scanner-error {
+  padding: 16px;
+  color: #f85149;
+  font-size: 12px;
+}
+
+/* ── Findings ── */
+.ai-scanner-findings {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.ai-scanner-findings::-webkit-scrollbar {
+  width: 5px;
+}
+.ai-scanner-findings::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ai-scanner-findings::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+.ai-finding {
+  padding: 10px 16px;
+  border-bottom: 1px solid #161b22;
+  transition: background 0.1s;
+}
+
+.ai-finding:hover {
+  background: #161b22;
+}
+
+.ai-finding-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ai-finding-sev {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ai-finding-critical .ai-finding-sev {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.12);
+}
+
+.ai-finding-high .ai-finding-sev {
+  color: #d29922;
+  background: rgba(210, 153, 34, 0.12);
+}
+
+.ai-finding-medium .ai-finding-sev {
+  color: #58a6ff;
+  background: rgba(56, 139, 253, 0.12);
+}
+
+.ai-finding-low .ai-finding-sev {
+  color: #7ee787;
+  background: rgba(126, 231, 135, 0.12);
+}
+
+.ai-finding-file {
+  font-family: 'SF Mono', 'Cascadia Code', monospace;
+  font-size: 11px;
+  color: #8b949e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-finding-desc {
+  font-size: 12px;
+  color: #e6edf3;
+  line-height: 1.4;
+}
+
+.ai-finding-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #58a6ff;
+  text-decoration: none;
+}
+
+.ai-finding-link:hover {
+  text-decoration: underline;
+}
